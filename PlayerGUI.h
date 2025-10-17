@@ -27,7 +27,7 @@ private:
     juce::TextButton muteButton{ "Mute" };
     juce::Slider volumeSlider;
     juce::Slider speedSlider;
-    //void loadTrack(const juce::File& file);
+
     std::unique_ptr<juce::FileChooser> fileChooser;
     void buttonClicked(juce::Button* button) override;
     void sliderValueChanged(juce::Slider* slider) override;
@@ -35,4 +35,5 @@ private:
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerGUI)
+
 };
