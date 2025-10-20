@@ -42,7 +42,7 @@ bool PlayerAudio::loadFile(const juce::File& file)
                 0,
                 nullptr,
                 reader->sampleRate);
-            setSpeed(currentspeed);
+            
             return true;
         }
         return false;
