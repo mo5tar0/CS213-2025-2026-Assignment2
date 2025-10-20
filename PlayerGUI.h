@@ -26,7 +26,6 @@ private:
     juce::TextButton stopButton{ "Stop" };
     juce::TextButton muteButton{ "Mute" };
     juce::Slider volumeSlider;
-    juce::Slider speedSlider;
 
     std::unique_ptr<juce::FileChooser> fileChooser;
     void buttonClicked(juce::Button* button) override;

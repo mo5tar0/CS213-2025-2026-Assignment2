@@ -18,11 +18,6 @@ PlayerGUI::PlayerGUI() {
     muteButton.addListener(this);
     addAndMakeVisible(muteButton);
 
-    speedSlider.setRange(0.5, 2.0, 0.1);  
-    speedSlider.setValue(1.0);
-    speedSlider.addListener(this);
-    addAndMakeVisible(speedSlider);
-
 
 }
 PlayerGUI::~PlayerGUI() {}
@@ -105,8 +100,5 @@ void PlayerGUI::sliderValueChanged(juce::Slider* slider)
     if (slider == &volumeSlider)
         PlayerAudio1.setGain((float)slider->getValue());
 
-  
-    else if (slider == &speedSlider)
-        PlayerAudio1.setSpeed(slider->getValue());
 }
 

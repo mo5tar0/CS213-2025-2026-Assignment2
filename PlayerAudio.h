@@ -21,14 +21,11 @@ public:
    
     float getGain() const;
     bool isMuted() const;
-    void setSpeed(double speed);
-    double getSpeed() const;
 
 
 private:
     bool muted = false;
     float gainBeforeMute = 1.0f;
-    double currentspeed = 1.0f;
     juce::AudioFormatManager formatManager;
     std::unique_ptr<juce::AudioFormatReaderSource> readerSource;
     juce::AudioTransportSource transportSource;

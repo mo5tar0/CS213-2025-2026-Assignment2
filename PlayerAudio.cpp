@@ -102,14 +102,5 @@ float PlayerAudio::getGain() const
 {
     return transportSource.getGain();
 }
-void PlayerAudio::setSpeed(double speed)
-{
-    currentspeed = speed;
-    resampleSource.setResamplingRatio(speed);
-}
 
-double PlayerAudio::getSpeed() const
-{
-    return currentspeed;
-}
 
