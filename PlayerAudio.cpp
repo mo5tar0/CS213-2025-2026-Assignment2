@@ -102,5 +102,11 @@ float PlayerAudio::getGain() const
 {
     return transportSource.getGain();
 }
-
-
+void PlayerAudio::pause()
+{
+    transportSource.stop();
+}
+bool PlayerAudio::isPlaying() const
+{
+    return transportSource.isPlaying();
+}

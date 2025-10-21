@@ -7,6 +7,17 @@ PlayerGUI::PlayerGUI() {
     {
         btn->addListener(this);
         addAndMakeVisible(btn);
+		playButton.setClickingTogglesState(true);
+        playButton.onClick = [this]() {
+            if (playButton.getToggleState()) {
+                PlayerAudio1.play();
+				playButton.setButtonText("Pause");
+            }
+            else {
+                PlayerAudio1.pause();
+				playButton.setButtonText("Play");
+            }
+			};
     }
 
 
@@ -76,13 +87,29 @@ void PlayerGUI::buttonClicked(juce::Button* button)
 
     else if (button == &playButton)
     {
-        PlayerAudio1.play();
+        if (isPlaying)
+        {
+            PlayerAudio1.pause();
+            playButton.setButtonText("Play");
+            isPlaying = false;
+        }
+        else
+        {
+            PlayerAudio1.play();
+            playButton.setButtonText("Pause");
+            isPlaying = true;
+        }
     }
+    
+  
+    
 
     else if (button == &stopButton)
     {
         PlayerAudio1.stop();
         PlayerAudio1.setPosition(0.0);
+		playButton.setToggleState(false, juce::dontSendNotification);
+		playButton.setButtonText("Play");
     }
     else if (button == &muteButton)
     {
@@ -97,11 +124,17 @@ void PlayerGUI::buttonClicked(juce::Button* button)
     else if(button == &goToStartButton)
     {
         PlayerAudio1.setPosition(0.0);
+        PlayerAudio1.play();
+        playButton.setButtonText("Pause");
+        isPlaying = true;
 	}
     else if (button == &goToEndButton)
     {
         double length = PlayerAudio1.getLength();
         PlayerAudio1.setPosition(length);
+        playButton.setToggleState(false, juce::dontSendNotification);
+        playButton.setButtonText("Play");
+    
 	}
 }
 void PlayerGUI::sliderValueChanged(juce::Slider* slider)

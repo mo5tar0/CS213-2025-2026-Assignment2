@@ -18,9 +18,10 @@ public:
     void setPosition(double posInSeconds);
     double getPosition() const;
     double getLength() const;
-   
+	void pause();
     float getGain() const;
     bool isMuted() const;
+	bool isPlaying() const;
 
 
 private:
