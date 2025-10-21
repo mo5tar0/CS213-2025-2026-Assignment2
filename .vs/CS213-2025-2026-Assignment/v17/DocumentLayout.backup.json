@@ -1,0 +1,92 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\dell\\source\\repos\\CS213-2025-2026-Assignment\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\dell\\source\\repos\\CS213-2025-2026-Assignment\\PlayerGUI.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:PlayerGUI.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\dell\\source\\repos\\CS213-2025-2026-Assignment\\PlayerGUI.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:PlayerGUI.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\dell\\source\\repos\\CS213-2025-2026-Assignment\\PlayerAudio.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:PlayerAudio.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\dell\\source\\repos\\CS213-2025-2026-Assignment\\PlayerAudio.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:PlayerAudio.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PlayerGUI.h",
+              "DocumentMoniker": "C:\\Users\\dell\\source\\repos\\CS213-2025-2026-Assignment\\PlayerGUI.h",
+              "RelativeDocumentMoniker": "PlayerGUI.h",
+              "ToolTip": "C:\\Users\\dell\\source\\repos\\CS213-2025-2026-Assignment\\PlayerGUI.h",
+              "RelativeToolTip": "PlayerGUI.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-10-20T17:06:12.43Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PlayerGUI.cpp",
+              "DocumentMoniker": "C:\\Users\\dell\\source\\repos\\CS213-2025-2026-Assignment\\PlayerGUI.cpp",
+              "RelativeDocumentMoniker": "PlayerGUI.cpp",
+              "ToolTip": "C:\\Users\\dell\\source\\repos\\CS213-2025-2026-Assignment\\PlayerGUI.cpp",
+              "RelativeToolTip": "PlayerGUI.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAI8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-10-20T17:05:54.319Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PlayerAudio.cpp",
+              "DocumentMoniker": "C:\\Users\\dell\\source\\repos\\CS213-2025-2026-Assignment\\PlayerAudio.cpp",
+              "RelativeDocumentMoniker": "PlayerAudio.cpp",
+              "ToolTip": "C:\\Users\\dell\\source\\repos\\CS213-2025-2026-Assignment\\PlayerAudio.cpp",
+              "RelativeToolTip": "PlayerAudio.cpp",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAGUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-10-20T17:05:39.047Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PlayerAudio.h",
+              "DocumentMoniker": "C:\\Users\\dell\\source\\repos\\CS213-2025-2026-Assignment\\PlayerAudio.h",
+              "RelativeDocumentMoniker": "PlayerAudio.h",
+              "ToolTip": "C:\\Users\\dell\\source\\repos\\CS213-2025-2026-Assignment\\PlayerAudio.h",
+              "RelativeToolTip": "PlayerAudio.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-10-20T17:04:58.536Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,13 +1,13 @@
 #include "PlayerAudio.h"
 
-PlayerAudio::PlayerAudio(): resampleSource(&transportSource, false) 
+PlayerAudio::PlayerAudio() : resampleSource(&transportSource, false)
 {
     formatManager.registerBasicFormats();
 }
 
 PlayerAudio::~PlayerAudio()
 {
-    releaseResources() ;
+    releaseResources();
 }
 
 void PlayerAudio::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
@@ -27,36 +27,36 @@ void PlayerAudio::getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferTo
 
 bool PlayerAudio::loadFile(const juce::File& file)
 {
-        if (auto* reader = formatManager.createReaderFor(file))
-        {
-           
-            transportSource.stop();
-            transportSource.setSource(nullptr);
-            readerSource.reset();
+    if (auto* reader = formatManager.createReaderFor(file))
+    {
 
-           
-            readerSource = std::make_unique<juce::AudioFormatReaderSource>(reader, true);
+        transportSource.stop();
+        transportSource.setSource(nullptr);
+        readerSource.reset();
 
-          
-            transportSource.setSource(readerSource.get(),
-                0,
-                nullptr,
-                reader->sampleRate);
-            
-            return true;
-        }
-        return false;
+
+        readerSource = std::make_unique<juce::AudioFormatReaderSource>(reader, true);
+
+
+        transportSource.setSource(readerSource.get(),
+            0,
+            nullptr,
+            reader->sampleRate);
+
+        return true;
+    }
+    return false;
 }
 void PlayerAudio::setMuted(bool choice)
 {
     if (choice && !muted) {
-        
+
         gainBeforeMute = transportSource.getGain();
         transportSource.setGain(0.0f);
         muted = true;
     }
     else if (!choice && muted) {
-        
+
         transportSource.setGain(gainBeforeMute);
         muted = false;
     }
@@ -72,11 +72,7 @@ void PlayerAudio::play()
     transportSource.start();
 }
 
-void PlayerAudio::stop()
-{
-    transportSource.stop();
-    transportSource.setPosition(0.0);
-}
+
 
 void PlayerAudio::setPosition(double posInSeconds)
 {
@@ -106,5 +102,4 @@ void PlayerAudio::pause()
 {
     transportSource.stop();
 }
-
 

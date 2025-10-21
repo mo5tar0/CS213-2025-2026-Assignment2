@@ -4,24 +4,24 @@
 class PlayerAudio {
 public:
     PlayerAudio();
-    ~PlayerAudio() ;
+    ~PlayerAudio();
 
-    void prepareToPlay(int samplesPerBlockExpected, double sampleRate) ;
-    void releaseResources() ;
-    void getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferToFill) ;
-   
+    void prepareToPlay(int samplesPerBlockExpected, double sampleRate);
+    void releaseResources();
+    void getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferToFill);
+
     void setMuted(bool choice);
     bool loadFile(const juce::File& audioFile);
     void play();
-    void stop();
+
     void setGain(float newGain);
     void setPosition(double posInSeconds);
     double getPosition() const;
     double getLength() const;
-	void pause();
+    void pause();
     float getGain() const;
     bool isMuted() const;
-	bool isPlaying() const;
+    bool isPlaying() const { return transportSource.isPlaying(); }
 
 
 private:
