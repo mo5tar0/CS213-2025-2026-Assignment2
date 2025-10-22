@@ -3,7 +3,7 @@
 
 PlayerGUI::PlayerGUI() {
 
-    for (auto* btn : { &loadButton, &playButton,  &muteButton, &goToStartButton, &goToEndButton })
+    for (auto* btn : { &loadButton, &playButton,  &muteButton, &goToStartButton, &goToEndButton ,&repeatButton})
     {
         btn->addListener(this);
         addAndMakeVisible(btn);
@@ -46,6 +46,7 @@ void PlayerGUI::resized()
     muteButton.setBounds(240, y, 80, 40);
     goToStartButton.setBounds(340, y, 100, 40);
     goToEndButton.setBounds(460, y, 100, 40);
+    repeatButton.setBounds(580, y, 80, 40);
 
     volumeSlider.setBounds(20, 100, getWidth() - 40, 30);
 
@@ -94,14 +95,17 @@ void PlayerGUI::buttonClicked(juce::Button* button)
         }
     }
 
+    else if (button == &repeatButton)
+    {
+        PlayerAudio1.repeat();
+        if (repeatButton.getButtonText() == "Repeat") {
 
-
-
-
-
-
-
-
+            repeatButton.setButtonText("UnRepeat");
+        }
+        else {
+            repeatButton.setButtonText("Repeat");
+        }
+    }
 
 
     else if (button == &muteButton)

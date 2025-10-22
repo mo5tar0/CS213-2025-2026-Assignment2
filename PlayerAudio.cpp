@@ -71,7 +71,17 @@ void PlayerAudio::play()
 {
     transportSource.start();
 }
-
+void PlayerAudio::repeat() {
+    if (!Repeat) {
+        readerSource->setLooping(true);
+        Repeat = true;
+    }
+    else {
+        Repeat = false;
+        transportSource.setPosition(transportSource.getCurrentPosition());
+        readerSource->setLooping(false);
+    }
+}
 
 
 void PlayerAudio::setPosition(double posInSeconds)

@@ -27,6 +27,7 @@ private:
     juce::Slider volumeSlider;
     juce::TextButton goToStartButton{ "Go to Start" };
     juce::TextButton goToEndButton{ "Go to End" };
+    juce::TextButton repeatButton{ "Repeat" };
     std::unique_ptr<juce::FileChooser> fileChooser;
     bool isPlaying = false;
     void buttonClicked(juce::Button* button) override;

@@ -22,11 +22,13 @@ public:
     float getGain() const;
     bool isMuted() const;
     bool isPlaying() const { return transportSource.isPlaying(); }
+    void repeat();
 
 
 private:
     bool muted = false;
     float gainBeforeMute = 1.0f;
+    bool Repeat = false;
     juce::AudioFormatManager formatManager;
     std::unique_ptr<juce::AudioFormatReaderSource> readerSource;
     juce::AudioTransportSource transportSource;
