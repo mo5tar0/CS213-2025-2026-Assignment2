@@ -3,7 +3,7 @@
 
 PlayerGUI::PlayerGUI() {
 
-    for (auto* btn : { &loadButton, &playButton,  &muteButton, &goToStartButton, &goToEndButton ,&repeatButton})
+    for (auto* btn : { &loadButton, &playButton,  &muteButton, &goToStartButton, &goToEndButton ,&repeatButton })
     {
         btn->addListener(this);
         addAndMakeVisible(btn);
@@ -19,7 +19,14 @@ PlayerGUI::PlayerGUI() {
 
     muteButton.addListener(this);
     addAndMakeVisible(muteButton);
-
+    addAndMakeVisible(titleLabel);
+    addAndMakeVisible(artistLabel);
+    addAndMakeVisible(durationLabel);
+    addAndMakeVisible(addToPlaylistButton);
+    addAndMakeVisible(playlistBox);
+    addToPlaylistButton.addListener(this);
+    playlistModel = std::make_unique<PlaylistModel>(playlistFiles, PlayerAudio1,*this);
+    playlistBox.setModel(playlistModel.get());
 
 }
 PlayerGUI::~PlayerGUI() {}
@@ -49,6 +56,13 @@ void PlayerGUI::resized()
     repeatButton.setBounds(580, y, 80, 40);
 
     volumeSlider.setBounds(20, 100, getWidth() - 40, 30);
+    titleLabel.setBounds(20, 150, getWidth() - 40, 30);
+    artistLabel.setBounds(20, 180, getWidth() - 40, 30);
+    durationLabel.setBounds(20, 210, getWidth() - 40, 30);
+	addToPlaylistButton.setBounds(20, 250, 150, 30);
+	playlistBox.setBounds(20, 290, getWidth() - 40, getHeight() - 310);
+
+
 
 
 }
@@ -72,6 +86,12 @@ void PlayerGUI::buttonClicked(juce::Button* button)
                 auto file = fc.getResult();
                 if (file.existsAsFile()) {
                     PlayerAudio1.loadFile(file);
+                    titleLabel.setText("Title: " + PlayerAudio1.getTitle(), juce::dontSendNotification);
+                    artistLabel.setText("Artist: " + PlayerAudio1.getArtist(), juce::dontSendNotification);
+                    durationLabel.setText("Duration: " + PlayerAudio1.getDuration(), juce::dontSendNotification);
+                    PlayerAudio1.play();
+                    playButton.setButtonText("pause");
+                    isPlaying = true;
                 }
             })
             ;
@@ -133,11 +153,42 @@ void PlayerGUI::buttonClicked(juce::Button* button)
         playButton.setButtonText("Play");
 
     }
-}
+    else if (button == &addToPlaylistButton)
+    {
+        fileChooser = std::make_unique<juce::FileChooser>(
+            "Select audio files to add to playlist...",
+            juce::File{},
+            "*.wav;*.mp3");
+
+        fileChooser->launchAsync(
+            juce::FileBrowserComponent::openMode | juce::FileBrowserComponent::canSelectFiles,
+            [this](const juce::FileChooser& fc)
+            {
+                auto file = fc.getResult();
+                if (file.existsAsFile()) {
+                    playlistFiles.push_back(file);
+                    playlistBox.updateContent();
+                    repaint();
+                    
+                    
+                    
+                    
+                }
+            });
+    }
+            
+            
+                
+               
+            
+	
+    }
+
 void PlayerGUI::sliderValueChanged(juce::Slider* slider)
 {
     if (slider == &volumeSlider)
         PlayerAudio1.setGain((float)slider->getValue());
 
 }
+
 

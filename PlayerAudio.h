@@ -1,5 +1,7 @@
 #pragma once
 #include <JuceHeader.h>
+#include <functional>
+#include <vector>
 
 class PlayerAudio {
 public:
@@ -24,6 +26,12 @@ public:
     bool isPlaying() const { return transportSource.isPlaying(); }
     void repeat();
 
+    juce::String getTitle() const { return title; }
+    juce::String getArtist() const { return artist; }
+    juce::String getDuration() const { return duration; }
+
+    juce::Component* getParentComponent() const { return parentComponent; }
+    void setParentComponent(juce::Component* parent) { parentComponent = parent; }
 
 private:
     bool muted = false;
@@ -33,5 +41,11 @@ private:
     std::unique_ptr<juce::AudioFormatReaderSource> readerSource;
     juce::AudioTransportSource transportSource;
     juce::ResamplingAudioSource resampleSource;
+    juce::String title;
+    juce::String artist;
+    juce::String duration;
+    juce::Component* parentComponent = nullptr;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerAudio)
 };
+
+class PlaylistModel;

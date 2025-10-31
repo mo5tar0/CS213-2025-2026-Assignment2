@@ -42,6 +42,24 @@ bool PlayerAudio::loadFile(const juce::File& file)
             0,
             nullptr,
             reader->sampleRate);
+        transportSource.stop();
+        transportSource.setPosition(0);
+
+       title= file.getFileNameWithoutExtension();
+       auto meta = reader->metadataValues;
+       if (meta.containsKey("title"))
+           title = meta["title"];
+       if (meta.containsKey("artist"))
+           artist = meta["artist"];
+       double lengthInSeconds =
+           reader->lengthInSamples / reader->sampleRate;
+       int minutes = int(lengthInSeconds) / 60;
+       int seconds = int(lengthInSeconds) % 60;
+       duration = juce::String(minutes) + ":" + (seconds < 10 ? "0" : "") + juce::String(seconds);
+       if (artist.isEmpty())
+           artist = "Unknown Artist";
+       if (title.isEmpty())
+           title = file.getFileNameWithoutExtension();
 
         return true;
     }
@@ -111,5 +129,7 @@ float PlayerAudio::getGain() const
 void PlayerAudio::pause()
 {
     transportSource.stop();
+    
+    
 }
 
