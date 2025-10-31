@@ -130,6 +130,16 @@ void PlayerAudio::pause()
 {
     transportSource.stop();
     
-    
+}
+void PlayerAudio::fav() {
+    if (favorite.contains(currentFile)) {
+        favorite.removeFirstMatchingValue(currentFile);
+    }
+    else {
+        favorite.add(currentFile);
+    }
+
+    for (int i = 0; i < favorite.size(); i++)
+        Myfav.addItem(favorite[i].getFileName(), i + 1);
 }
 

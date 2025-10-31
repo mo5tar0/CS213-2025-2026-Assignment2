@@ -9,7 +9,9 @@ class PlaylistModel;
 
 class PlayerGUI : public juce::Component,
     public juce::Button::Listener,
-    public juce::Slider::Listener
+    public juce::Slider::Listener,
+    public juce::Timer,
+    public juce::ComboBox::Listener
 {
 public:
     PlayerGUI();
@@ -23,9 +25,10 @@ public:
     void updateLabels() {
         updateMetadata();
     };
-    
-  
-    
+ 
+    void timerCallback();
+
+    juce::Slider positionSlider;
 
 
 
@@ -39,6 +42,13 @@ private:
     juce::TextButton goToStartButton{ "Go to Start" };
     juce::TextButton goToEndButton{ "Go to End" };
     juce::TextButton repeatButton{ "Repeat" };
+    juce::TextButton set_AButton{ "Set A" };
+    juce::TextButton set_BButton{ "Set B" };
+    juce::TextButton favoriteButton{ "My Favorite" };
+    double A = 0;
+    double B = 0;
+    bool repeat = false;
+    void  comboBoxChanged(juce::ComboBox* comboBox);
     juce::Label titleLabel;
     juce::Label artistLabel;
     juce::Label durationLabel;
@@ -91,6 +101,8 @@ public:
             {
                 player.play();
                 gui.updateLabels();
+                gui.positionSlider.setRange(0.0, player.getLength());
+                gui.positionSlider.setValue(0.0);
             }
         }
     }

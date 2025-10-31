@@ -33,6 +33,11 @@ public:
     juce::Component* getParentComponent() const { return parentComponent; }
     void setParentComponent(juce::Component* parent) { parentComponent = parent; }
 
+    void fav();
+    juce::Array<juce::File>favorite;
+    juce::ComboBox Myfav;
+    juce::File currentFile;
+
 private:
     bool muted = false;
     float gainBeforeMute = 1.0f;

@@ -3,7 +3,7 @@
 
 PlayerGUI::PlayerGUI() {
 
-    for (auto* btn : { &loadButton, &playButton,  &muteButton, &goToStartButton, &goToEndButton ,&repeatButton })
+    for (auto* btn : { &loadButton, &playButton,  &muteButton, &goToStartButton, &goToEndButton ,&repeatButton ,&set_AButton,&set_BButton ,&favoriteButton })
     {
         btn->addListener(this);
         addAndMakeVisible(btn);
@@ -27,6 +27,17 @@ PlayerGUI::PlayerGUI() {
     addToPlaylistButton.addListener(this);
     playlistModel = std::make_unique<PlaylistModel>(playlistFiles, PlayerAudio1,*this);
     playlistBox.setModel(playlistModel.get());
+
+    positionSlider.setRange(0.0, 1.0);
+    positionSlider.setValue(0.0);
+    positionSlider.addListener(this);
+    addAndMakeVisible(positionSlider);
+
+    PlayerAudio1.Myfav.addListener(this);
+    addAndMakeVisible(PlayerAudio1.Myfav);
+
+
+    startTimer(100);
 
 }
 PlayerGUI::~PlayerGUI() {}
@@ -55,12 +66,19 @@ void PlayerGUI::resized()
     goToEndButton.setBounds(460, y, 100, 40);
     repeatButton.setBounds(580, y, 80, 40);
 
+    set_AButton.setBounds(50, 250, 80, 40);
+    set_BButton.setBounds(150, 250, 80, 40);
+    favoriteButton.setBounds(250, 250, 80, 40);
+    positionSlider.setBounds(20, 150, getWidth() - 40, 30);
+    PlayerAudio1.Myfav.setBounds(350, 250, 40, 40);
+
     volumeSlider.setBounds(20, 100, getWidth() - 40, 30);
-    titleLabel.setBounds(20, 150, getWidth() - 40, 30);
-    artistLabel.setBounds(20, 180, getWidth() - 40, 30);
-    durationLabel.setBounds(20, 210, getWidth() - 40, 30);
-	addToPlaylistButton.setBounds(20, 250, 150, 30);
-	playlistBox.setBounds(20, 290, getWidth() - 40, getHeight() - 310);
+    titleLabel.setBounds(20, 300, getWidth() - 40, 30);
+    artistLabel.setBounds(20, 330, getWidth() - 40, 30);
+    durationLabel.setBounds(20, 350, getWidth() - 40, 30);
+    addToPlaylistButton.setBounds(20, 400, 150, 30);
+    playlistBox.setBounds(20, 450, getWidth() - 40, getHeight() - 310);
+
 
 
 
@@ -85,6 +103,7 @@ void PlayerGUI::buttonClicked(juce::Button* button)
             {
                 auto file = fc.getResult();
                 if (file.existsAsFile()) {
+                    PlayerAudio1.currentFile = file;
                     PlayerAudio1.loadFile(file);
                     titleLabel.setText("Title: " + PlayerAudio1.getTitle(), juce::dontSendNotification);
                     artistLabel.setText("Artist: " + PlayerAudio1.getArtist(), juce::dontSendNotification);
@@ -92,6 +111,18 @@ void PlayerGUI::buttonClicked(juce::Button* button)
                     PlayerAudio1.play();
                     playButton.setButtonText("pause");
                     isPlaying = true;
+
+                    positionSlider.setRange(0.0, PlayerAudio1.getLength());
+                    positionSlider.setValue(0.0);
+                    favoriteButton.setButtonText("My Favorite");
+                    if (PlayerAudio1.favorite.contains(file)) {
+                        favoriteButton.setButtonText("UnFavorite");
+
+                    }
+                    else {
+                        favoriteButton.setButtonText("My Favorite");
+                    }
+                }
                 }
             })
             ;
@@ -143,7 +174,7 @@ void PlayerGUI::buttonClicked(juce::Button* button)
         PlayerAudio1.setPosition(0.0);
         PlayerAudio1.play();
         playButton.setButtonText("Pause");
-
+        repeat = false;
     }
     else if (button == &goToEndButton)
     {
@@ -169,18 +200,35 @@ void PlayerGUI::buttonClicked(juce::Button* button)
                     playlistFiles.push_back(file);
                     playlistBox.updateContent();
                     repaint();
-                    
-                    
-                    
-                    
+                     
                 }
             });
     }
-            
-            
-                
-               
-            
+    else if (button == &set_AButton) {
+        A = positionSlider.getValue();
+        repeat = false;
+
+
+}
+
+    else if (button == &set_BButton) {
+        B = positionSlider.getValue();
+        repeat = true;
+
+}
+
+    else if (button == &favoriteButton) {
+        PlayerAudio1.fav();
+
+        if (PlayerAudio1.favorite.contains(PlayerAudio1.currentFile)) {
+            favoriteButton.setButtonText("UnFavorite");
+
+        }
+        else {
+            favoriteButton.setButtonText("My Favorite");
+        }
+        }
+
 	
     }
 
@@ -188,7 +236,28 @@ void PlayerGUI::sliderValueChanged(juce::Slider* slider)
 {
     if (slider == &volumeSlider)
         PlayerAudio1.setGain((float)slider->getValue());
+    else if (slider == &positionSlider)
+    {
+        PlayerAudio1.setPosition(positionSlider.getValue());
+    }
+}
 
+void PlayerGUI::timerCallback()
+{
+    positionSlider.setValue(PlayerAudio1.getPosition(), juce::dontSendNotification);
+    if (repeat && PlayerAudio1.getPosition() >= B) {
+        PlayerAudio1.setPosition(A);
+        PlayerAudio1.play();
+
+    }
 }
 
 
+void PlayerGUI::comboBoxChanged(juce::ComboBox* comboBox)
+{
+    PlayerAudio1.loadFile(PlayerAudio1.favorite[comboBox->getSelectedItemIndex()]);
+    positionSlider.setRange(0.0, PlayerAudio1.getLength());
+    positionSlider.setValue(0.0);
+    PlayerAudio1.play();
+
+}
