@@ -1,7 +1,6 @@
 #pragma once
 #include <JuceHeader.h>
-#include <functional>
-#include <vector>
+
 
 class PlayerAudio {
 public:
@@ -23,8 +22,11 @@ public:
     void pause();
     float getGain() const;
     bool isMuted() const;
-    bool isPlaying() const { return transportSource.isPlaying(); }
+    bool isPlaying() const;
     void repeat();
+
+    void setSpeed(double speed);
+    double getSpeed() const;
 
     juce::String getTitle() const { return title; }
     juce::String getArtist() const { return artist; }
@@ -38,6 +40,11 @@ public:
     juce::ComboBox Myfav;
     juce::File currentFile;
 
+    juce::AudioFormatManager& getFormatManager() { return formatManager; }
+    void setThumbnailSource(const juce::File& file);
+    juce::AudioThumbnail* getThumbnail() const { return thumbnail ? thumbnail.get() : nullptr; }
+    bool hasThumbnail() const;
+
 private:
     bool muted = false;
     float gainBeforeMute = 1.0f;
@@ -50,7 +57,9 @@ private:
     juce::String artist;
     juce::String duration;
     juce::Component* parentComponent = nullptr;
+    std::unique_ptr<juce::AudioThumbnail> thumbnail;
+    juce::AudioThumbnailCache thumbnailCache{ 5 };
+    double currentspeed = 1.0f;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerAudio)
 };
-
 class PlaylistModel;
