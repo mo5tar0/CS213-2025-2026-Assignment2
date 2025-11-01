@@ -73,12 +73,13 @@ PlayerGUI::PlayerGUI()
     positionSlider.setValue(0.0);
     positionSlider.addListener(this);
     addAndMakeVisible(positionSlider);
+    positionSlider.setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
 
     PlayerAudio1.Myfav.addListener(this);
     addAndMakeVisible(PlayerAudio1.Myfav);
 
 
-    startTimer(100);
+    startTimer(50);
 
 
 
@@ -146,13 +147,13 @@ void PlayerGUI::resized()
     ctrlRow.removeFromLeft(gap);
     sleepTimerButton.setBounds(ctrlRow.removeFromLeft(btnW).reduced(5));
 
-    auto sliders = ctrlRow.reduced(5);
+    auto slidersArea = area.removeFromTop(100).reduced(5);
 
-    volumeLabel.setBounds(sliders.removeFromTop(10));
-    volumeSlider.setBounds(sliders.removeFromTop(20));
+    volumeLabel.setBounds(slidersArea.removeFromTop(20));
+    volumeSlider.setBounds(slidersArea.removeFromTop(20));
 
-    speedLabel.setBounds(sliders.removeFromTop(10));
-    speedSlider.setBounds(sliders.removeFromTop(20));
+    speedLabel.setBounds(slidersArea.removeFromTop(20));
+    speedSlider.setBounds(slidersArea.removeFromTop(20));
 
     auto secButtonsRow = area.removeFromTop(40).reduced(5);
     int extraBtnW = 80;
@@ -324,7 +325,7 @@ void PlayerGUI::buttonClicked(juce::Button* button) {
 
     else if (button == &set_BButton) {
         B = positionSlider.getValue();
-        repeat = true;
+        repeat = !repeat;
 
     }
 
@@ -354,6 +355,12 @@ void PlayerGUI::sliderValueChanged(juce::Slider* slider)
 
 void PlayerGUI::timerCallback()
 {
+    positionSlider.setValue(PlayerAudio1.getPosition(), juce::dontSendNotification);
+    if (repeat && PlayerAudio1.getPosition() >= B) {
+        PlayerAudio1.setPosition(A);
+        PlayerAudio1.play();
+
+    }
     currentPosition = PlayerAudio1.getPosition();
     double len = PlayerAudio1.getLength();
     timeLabel.setText(secondsToTime(currentPosition) + " / " + secondsToTime(len), juce::dontSendNotification);
@@ -370,6 +377,7 @@ void PlayerGUI::timerCallback()
             sleepTimerEnabled = false;
             sleepTimerCounter = 0;
             sleepTimerButton.setButtonText("Sleep Off");
+
         }
     }
 }
@@ -378,16 +386,6 @@ juce::String PlayerGUI::secondsToTime(double s)
     int m = (int)s / 60;
     int sec = (int)s % 60;
     return juce::String(m) + ":" + (sec < 10 ? "0" : "") + juce::String(sec);
-}
-
-void PlayerGUI::timerCallbackk()
-{
-    positionSlider.setValue(PlayerAudio1.getPosition(), juce::dontSendNotification);
-    if (repeat && PlayerAudio1.getPosition() >= B) {
-        PlayerAudio1.setPosition(A);
-        PlayerAudio1.play();
-
-    }
 }
 
 void PlayerGUI::comboBoxChanged(juce::ComboBox* comboBox)

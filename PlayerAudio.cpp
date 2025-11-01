@@ -146,7 +146,7 @@ void PlayerAudio::fav() {
     else {
         favorite.add(currentFile);
     }
-
+    Myfav.clear();
     for (int i = 0; i < favorite.size(); i++)
         Myfav.addItem(favorite[i].getFileName(), i + 1);
 }

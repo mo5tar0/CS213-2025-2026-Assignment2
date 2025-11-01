@@ -25,7 +25,7 @@ public:
     };
 
     juce::Slider positionSlider;
-    void timerCallbackk();
+    
 
     void resetCurrentPosition() {
         currentPosition = 0.0;
@@ -41,9 +41,9 @@ public:
     }
 
     void startPlaybackTimer() { startTimer(50); }
-
-private:
     PlayerAudio PlayerAudio1;
+private:
+    
 
     class WaveformDisplay : public juce::Component {
     public:
@@ -174,6 +174,7 @@ public:
     {
         if (row >= 0 && row < (int)playlistFiles.size())
         {
+            gui.PlayerAudio1.currentFile = playlistFiles[row];
             if (player.loadFile(playlistFiles[row]))
             {
                 player.play();
