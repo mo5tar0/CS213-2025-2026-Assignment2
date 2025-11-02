@@ -44,7 +44,7 @@ public:
     void setThumbnailSource(const juce::File& file);
     juce::AudioThumbnail* getThumbnail() const { return thumbnail ? thumbnail.get() : nullptr; }
     bool hasThumbnail() const;
-
+    juce::AudioSource* getAudioSource() { return &resampleSource; }
 private:
     bool muted = false;
     float gainBeforeMute = 1.0f;
@@ -59,6 +59,7 @@ private:
     juce::Component* parentComponent = nullptr;
     std::unique_ptr<juce::AudioThumbnail> thumbnail;
     juce::AudioThumbnailCache thumbnailCache{ 5 };
+	
     double currentspeed = 1.0f;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerAudio)
 };

@@ -93,6 +93,8 @@ PlayerGUI::PlayerGUI()
     useProgressBar = true;
     waveformComponent = std::make_unique<WaveformDisplay>(PlayerAudio1.getThumbnail(), currentPosition);
     addAndMakeVisible(waveformComponent.get());
+
+	
 }
 
 PlayerGUI::~PlayerGUI()
@@ -247,7 +249,13 @@ void PlayerGUI::buttonClicked(juce::Button* button) {
             repeatButton.setButtonText("Repeat");
         }
     }
-    else if (button == &muteButton) { PlayerAudio1.setMuted(!PlayerAudio1.isMuted()); }
+    else if (button == &muteButton) 
+        {
+            bool shouldMute = !PlayerAudio1.isMuted();
+            PlayerAudio1.setMuted(shouldMute);
+            muteButton.setButtonText(shouldMute ? "Unmute" : "Mute");
+        }
+    
     else if (button == &backward10sButton) {
         if (currentPosition >= 10) {
             PlayerAudio1.setPosition(PlayerAudio1.getPosition() - 10.0);
@@ -379,6 +387,10 @@ void PlayerGUI::timerCallback()
             sleepTimerButton.setButtonText("Sleep Off");
 
         }
+    }
+    if (PlayerAudio1.getPosition() >= PlayerAudio1.getLength())
+    {
+        playButton.setButtonText("Play");
     }
 }
 juce::String PlayerGUI::secondsToTime(double s)
