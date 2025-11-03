@@ -22,6 +22,13 @@ public:
 
     void updateLabels() {
         updateMetadata();
+        if (PlayerAudio1.favorite.contains(PlayerAudio1.currentFile)) {
+            favoriteButton.setButtonText("UnFavorite");
+
+        }
+        else {
+            favoriteButton.setButtonText("My Favorite");
+        }
     };
 
     juce::Slider positionSlider;
@@ -174,9 +181,9 @@ public:
     {
         if (row >= 0 && row < (int)playlistFiles.size())
         {
-            gui.PlayerAudio1.currentFile = playlistFiles[row];
             if (player.loadFile(playlistFiles[row]))
             {
+                player.currentFile = playlistFiles[row];
                 player.play();
                 gui.updateLabels();
 

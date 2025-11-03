@@ -402,10 +402,24 @@ juce::String PlayerGUI::secondsToTime(double s)
 
 void PlayerGUI::comboBoxChanged(juce::ComboBox* comboBox)
 {
+    PlayerAudio1.currentFile = PlayerAudio1.favorite[comboBox->getSelectedItemIndex()];
     PlayerAudio1.loadFile(PlayerAudio1.favorite[comboBox->getSelectedItemIndex()]);
+    titleLabel.setText("Title: " + PlayerAudio1.getTitle(), juce::dontSendNotification);
+    artistLabel.setText("Artist: " + PlayerAudio1.getArtist(), juce::dontSendNotification);
+    durationLabel.setText("Duration: " + PlayerAudio1.getDuration(), juce::dontSendNotification);
+    if (PlayerAudio1.favorite.contains(PlayerAudio1.currentFile)) {
+        favoriteButton.setButtonText("UnFavorite");
+
+    }
+    else {
+        favoriteButton.setButtonText("My Favorite");
+    }
+
     positionSlider.setRange(0.0, PlayerAudio1.getLength());
-    positionSlider.setValue(0.0);
+
+
     PlayerAudio1.play();
+    playButton.setButtonText("Pause");
 
 }
 
