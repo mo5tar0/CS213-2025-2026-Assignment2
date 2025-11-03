@@ -295,12 +295,77 @@ void PlayerGUI::buttonClicked(juce::Button* button) {
     }
     else if (button == &goToEndButton)
     {
-        double length = PlayerAudio1.getLength();
-        PlayerAudio1.setPosition(length);
-        playButton.setToggleState(false, juce::dontSendNotification);
-        playButton.setButtonText("Play");
+        if (!playlistFiles.empty())
+        {
+            int idx = -1;
+            for (int i = 0; i < (int)playlistFiles.size(); ++i)
+            {
+                if (playlistFiles[i] == PlayerAudio1.currentFile)
+                {
+                    idx = i;
+                    break;
+                }
+            }
 
-    }
+            if (idx >= 0 && idx + 1 < (int)playlistFiles.size())
+            {
+                auto nextFile = playlistFiles[idx + 1];
+                if (PlayerAudio1.loadFile(nextFile))
+                {
+                    PlayerAudio1.currentFile = nextFile;
+                    titleLabel.setText("Title: " + PlayerAudio1.getTitle(), juce::dontSendNotification);
+                    artistLabel.setText("Artist: " + PlayerAudio1.getArtist(), juce::dontSendNotification);
+                    durationLabel.setText("Duration: " + PlayerAudio1.getDuration(), juce::dontSendNotification);
+
+                    positionSlider.setRange(0.0, PlayerAudio1.getLength());
+                    positionSlider.setValue(0.0);
+
+
+                    currentPosition = 0.0;
+
+                    if (useProgressBar && waveformComponent)
+                    {
+
+                        waveformComponent->setThumbnail(PlayerAudio1.getThumbnail());
+
+                        waveformComponent->repaint();
+                    }
+
+                    PlayerAudio1.play();
+                    playButton.setButtonText("Pause");
+
+                    playlistBox.selectRow(idx + 1);
+                    playlistBox.updateContent();
+
+
+                    resized();
+                    repaint();
+                }
+
+            }
+            else if (idx == (int)playlistFiles.size() - 1)
+            {
+                PlayerAudio1.setPosition(PlayerAudio1.getLength());
+                PlayerAudio1.pause();
+                playButton.setToggleState(false, juce::dontSendNotification);
+                playButton.setButtonText("Play");
+            }
+            else
+            {
+                double length = PlayerAudio1.getLength();
+                PlayerAudio1.setPosition(length);
+                playButton.setToggleState(false, juce::dontSendNotification);
+                playButton.setButtonText("Play");
+            }
+        }
+        else
+        {
+            double length = PlayerAudio1.getLength();
+            PlayerAudio1.setPosition(length);
+            playButton.setToggleState(false, juce::dontSendNotification);
+            playButton.setButtonText("Play");
+        }
+        }
     else if (button == &addToPlaylistButton)
     {
         fileChooser = std::make_unique<juce::FileChooser>(
