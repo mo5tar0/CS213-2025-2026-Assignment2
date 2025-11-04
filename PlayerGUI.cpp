@@ -330,6 +330,13 @@ void PlayerGUI::buttonClicked(juce::Button* button) {
 
                         waveformComponent->repaint();
                     }
+					 if (PlayerAudio1.favorite.contains(nextFile)) {
+                      favoriteButton.setButtonText("UnFavorite");
+
+                    }
+                    else {
+                      favoriteButton.setButtonText("My Favorite");
+                         }
 
                     PlayerAudio1.play();
                     playButton.setButtonText("Pause");
@@ -491,4 +498,5 @@ void PlayerGUI::comboBoxChanged(juce::ComboBox* comboBox)
 
 void PlayerGUI::prepareToPlay(int samples, double rate) { PlayerAudio1.prepareToPlay(samples, rate); }
 void PlayerGUI::getNextAudioBlock(const juce::AudioSourceChannelInfo& b) { PlayerAudio1.getNextAudioBlock(b); }
+
 void PlayerGUI::releaseResources() { PlayerAudio1.releaseResources(); stopTimer(); }
